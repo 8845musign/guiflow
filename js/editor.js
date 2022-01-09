@@ -1,7 +1,7 @@
-var $ = require("./jquery-2.1.4.min");
-var fs = require("fs");
+var $ = require('./jquery-2.1.4.min');
+var fs = require('fs');
 var EventEmitter = require('events');
-var flumine = require("flumine");
+var flumine = require('flumine');
 var dialog = require('electron').remote.dialog;
 const { clipboard } = require('electron')
 require('ace-min-noconflict');
@@ -13,31 +13,33 @@ var EDITOR_FILE_VALUE;
 
 var emitter = new EventEmitter();
 
-$(window).on("load", function() {
-    editor = ace.edit("text");
+$(window).on('load', function() {
+    // eslint-disable-next-line
+    editor = ace.edit('text');
     editor.$blockScrolling = Infinity;
-    if (process.platform === "darwin") {
-        editor.commands.bindKey("Ctrl-P", "golineup");
+    if (process.platform === 'darwin') {
+        editor.commands.bindKey('Ctrl-P', 'golineup');
     }
-    editor.setTheme("ace/theme/monokai");
+    editor.setTheme('ace/theme/monokai');
     setInterval(function() {
         if (editor.getValue() !== EDITOR_FILE_VALUE) {
-            emitter.emit("diff", EDITOR_FILE_NAME);
+            emitter.emit('diff', EDITOR_FILE_NAME);
         } else {
-            emitter.emit("same", EDITOR_FILE_NAME);
+            emitter.emit('same', EDITOR_FILE_NAME);
         }
     }, 1000);
     var PREV = editor.getValue();
     setInterval(function() {
-        now = editor.getValue();
+        const now = editor.getValue();
         if (PREV !== now) {
             PREV = now;
-            emitter.emit("change", now);
+            emitter.emit('change', now);
         }
     }, 500);
 
 });
 
+// eslint-disable-next-line
 var waitEditorReady = flumine(function(d, ok, ng) {
     if (editor) {
         ok(d);
@@ -52,12 +54,13 @@ var waitEditorReady = flumine(function(d, ok, ng) {
 });
 
 var getFileName = function(forceDialog) {
+    // eslint-disable-next-line
     return flumine(function(d, ok, ng) {
         if (!forceDialog && EDITOR_FILE_NAME) {
             return ok(EDITOR_FILE_NAME);
         } else {
             dialog.showSaveDialog({
-                title: "save file",
+                title: 'save file',
                 filters: [{
                     name: 'Documents',
                     extensions: ['txt', 'md', 'text']
@@ -75,7 +78,7 @@ var getFileName = function(forceDialog) {
 
 var saveFile = flumine(function(d, ok, ng) {
     if (!d) {
-        return ok("canceled");
+        return ok('canceled');
     }
     var code = editor.getValue();
     fs.writeFile(d, code, function(err) {
@@ -92,7 +95,8 @@ var copy = waitEditorReady.and(function() {
     var text = editor.getCopyText();
     clipboard.writeText(text);
 });
-var app = module.exports = {
+// eslint-disable-next-line
+const app = module.exports = {
     open: waitEditorReady.and(function(d, ok, ng) {
         var fileName = d[1];
         EDITOR_FILE_NAME = fileName;
@@ -122,6 +126,7 @@ var app = module.exports = {
     redo: waitEditorReady.and(function() {
         editor.redo();
     }),
+    // eslint-disable-next-line
     cut: waitEditorReady.and(copy).and(function(d) {
         var target = editor.getSelectionRange();
         editor.getSession().getDocument().remove(target);
@@ -139,12 +144,13 @@ var app = module.exports = {
     }),
     setError: waitEditorReady.and(function(err) {
         var errorInfo = err.message.split(/:/g);
+        //eslint-disable-next-line
         var fileName = errorInfo[0];
         var line = errorInfo[1];
         var text = errorInfo[3] + errorInfo[4];
         editor.getSession().setAnnotations([{
             row: line,
-            type: "error",
+            type: 'error',
             text: text,
         }]);
     }),

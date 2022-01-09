@@ -1,57 +1,65 @@
 //process.env.NODE_PATH = "./";
-if (process.platform == "win32") {
-    //modulePaths.push();
-    var p = process.resourcesPath; //+ "\\app";
-    console.log(p);
-    module.paths.unshift(p + "\\app");
-    module.paths.unshift(p + "\\app.asar");
-    module.paths.unshift(p + "\\app\\node_modules");
-    module.paths.unshift(p + "\\app.asar\\node_modules");
+if (process.platform == 'win32') {
+  //modulePaths.push();
+  var p = process.resourcesPath; //+ "\\app";
+  console.log(p);
+  module.paths.unshift(p + '\\app');
+  module.paths.unshift(p + '\\app.asar');
+  module.paths.unshift(p + '\\app\\node_modules');
+  module.paths.unshift(p + '\\app.asar\\node_modules');
 }
-var resolvePath = function(p) {
-    if (process.platform == "win32") {
-        return p.replace(/^\.\//, '');
-    } else {
-        return p;
-    }
+var resolvePath = function (p) {
+  if (process.platform == 'win32') {
+    return p.replace(/^\.\//, '');
+  } else {
+    return p;
+  }
 };
-var nodeModule = function() {
-    if (process.platform == "win32") {
-        return "node_modules/" + p;
-    } else {
-        return p;
-    }
 
+// eslint-disable-next-line
+var nodeModule = function () {
+  if (process.platform == 'win32') {
+    return 'node_modules/' + p;
+  } else {
+    return p;
+  }
 };
-var ipcRenderer = require("electron").ipcRenderer;
+var ipcRenderer = require('electron').ipcRenderer;
 // var remote = require("remote");
-var fs = require("fs");
-var flumine = require("flumine");
-var $ = require(resolvePath("./js/jquery-2.1.4.min"));
+// eslint-disable-next-line
+var fs = require('fs');
+// eslint-disable-next-line
+var flumine = require('flumine');
+// eslint-disable-next-line
+var $ = require(resolvePath('./js/jquery-2.1.4.min'));
 // var uiflow = remote.require("./app/uiflow");
-var editor = require(resolvePath("./js/editor"));
-var diagram = require(resolvePath("./js/diagram"));
+var editor = require(resolvePath('./js/editor'));
+// eslint-disable-next-line
+var diagram = require(resolvePath('./js/diagram'));
 
 [
-    "open",
-    "save",
-    "saveAs",
-    "undo",
-    "redo",
-    "cut",
-    "copy",
-    "paste",
-    "selectAll"
-].forEach(function(channel) {
-    ipcRenderer.on(channel, editor[channel].listener(2));
+  'open',
+  'save',
+  'saveAs',
+  'undo',
+  'redo',
+  'cut',
+  'copy',
+  'paste',
+  'selectAll',
+].forEach(function (channel) {
+  ipcRenderer.on(channel, editor[channel].listener(2));
 });
 
-var sendToEditor = function(channel) {
-    return editor[channel];
+// eslint-disable-next-line
+var sendToEditor = function (channel) {
+  return editor[channel];
 };
 
-const { clipboard } = require('electron')
-const { nativeImage } = require('electron')
+// eslint-disable-next-line
+const { clipboard } = require('electron');
+// eslint-disable-next-line
+const { nativeImage } = require('electron');
 
 // var Menu = remote.require('menu');
 // var menu = Menu.buildFromTemplate([{
@@ -87,11 +95,10 @@ const { nativeImage } = require('electron')
 //     menu.popup(remote.getCurrentWindow());
 // }, false);
 
-var dialogs = require("dialogs")({});
-
+// eslint-disable-next-line
+var dialogs = require('dialogs')({});
 
 // $(function() {
-
 
 //     $(window).on("load resize", function() {
 //         $(".main").height($(window).height());
