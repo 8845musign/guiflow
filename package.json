@@ -6,7 +6,8 @@
   "scripts": {
     "start": "DEBUG=true $(npm bin)/electron .",
     "clean": "$(npm bin)/gulp clean",
-    "package": "$(npm bin)/gulp package"
+    "package": "$(npm bin)/gulp package",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -22,7 +23,11 @@
     "dialogs": "^2.0.1",
     "electron-debug": "^3.2.0",
     "electron-windows-installer": "^1.7.8",
+    "eslint": "^8.6.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "flumine": "^0.1.8",
+    "prettier": "^2.5.1",
     "sprintf": "^0.1.5",
     "through2": "^4.0.2",
     "uiflow": "^1.1.8"
