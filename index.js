@@ -1,42 +1,44 @@
-var fs = require("fs");
-var electron = require('electron');
-var app = electron.app;
-var BrowserWindow = electron.BrowserWindow;
-var Menu = electron.Menu;
-var dialog = electron.dialog;
+//eslint-disable-next-line
+const fs = require('fs');
+const electron = require('electron');
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+const Menu = electron.Menu;
+const dialog = electron.dialog;
 app.on('window-all-closed', function() {
     app.quit();
 });
 
-var exec = require('child_process').exec;
+//eslint-disable-next-line
+const exec = require('child_process').exec;
 
-var warn = function(message) {
+const warn = function(message) {
     dialog.showMessageBox({
-        type: "warning",
-        title: "warning",
+        type: 'warning',
+        title: 'warning',
         message: message,
-        buttons: ["close"]
+        buttons: ['close']
     });
 };
-var sendToFocusedBrowser = function(channel) {
+const sendToFocusedBrowser = function(channel) {
     return function() {
-        var win = BrowserWindow.getFocusedWindow();
+        const win = BrowserWindow.getFocusedWindow();
         if (!win) {
-            return warn("no selected window");
+            return warn('no selected window');
         }
         win.webContents.send(channel);
     };
 };
-var mainMenu = {
+const mainMenu = {
     label: app.getName(),
     submenu: [{
         label: 'About guiflow',
         click: function() {
             dialog.showMessageBox({
-                type: "info",
-                title: "about guiflow",
-                message: "version : 0.01",
-                buttons: ["close"]
+                type: 'info',
+                title: 'about guiflow',
+                message: 'version : 0.01',
+                buttons: ['close']
             });
         }
     }, {
@@ -51,7 +53,7 @@ var mainMenu = {
         label: 'Toggle Full Screen',
         accelerator: 'F11',
         click: function() {
-            var win = BrowserWindow.getFocusedWindow();
+            const win = BrowserWindow.getFocusedWindow();
             if (win) {
                 win.setFullScreen(!win.isFullScreen());
             }
@@ -60,14 +62,14 @@ var mainMenu = {
         label: 'Toggle Dev Tool',
         accelerator: 'F5',
         click: function() {
-            var win = BrowserWindow.getFocusedWindow();
+            const win = BrowserWindow.getFocusedWindow();
             if (win) {
                 win.toggleDevTools();
             }
         }
     }]
 };
-var fileMenu = {
+const fileMenu = {
     label: 'File',
     submenu: [{
         label: 'New File',
@@ -94,56 +96,56 @@ var fileMenu = {
         },
 
     }, {
-        label: "Save",
+        label: 'Save',
         accelerator: 'CmdOrCtrl+S',
         onlyFocusedWindow: true,
-        click: sendToFocusedBrowser("save"),
+        click: sendToFocusedBrowser('save'),
     }, {
-        label: "Save As...",
+        label: 'Save As...',
         accelerator: 'Shift+CmdOrCtrl+S',
-        click: sendToFocusedBrowser("saveAs"),
+        click: sendToFocusedBrowser('saveAs'),
     }]
 };
 
-var editMenu = {
+const editMenu = {
     label: 'Edit',
     submenu: [{
-            label: "Undo",
+            label: 'Undo',
             accelerator: 'CmdOrCtrl+Z',
-            click: sendToFocusedBrowser("undo"),
+            click: sendToFocusedBrowser('undo'),
         }, {
-            label: "Redo",
+            label: 'Redo',
             accelerator: 'CmdOrCtrl+Y',
-            click: sendToFocusedBrowser("redo"),
+            click: sendToFocusedBrowser('redo'),
         }, {
             type: 'separator'
         }, {
-            label: "Cut",
+            label: 'Cut',
             accelerator: 'CmdOrCtrl+X',
-            click: sendToFocusedBrowser("cut"),
+            click: sendToFocusedBrowser('cut'),
         }, {
-            label: "Copy",
+            label: 'Copy',
             accelerator: 'CmdOrCtrl+C',
-            click: sendToFocusedBrowser("copy"),
+            click: sendToFocusedBrowser('copy'),
         }, {
-            label: "Paste",
+            label: 'Paste',
             accelerator: 'CmdOrCtrl+V',
-            click: sendToFocusedBrowser("paste"),
+            click: sendToFocusedBrowser('paste'),
         }, {
-            label: "Select All",
+            label: 'Select All',
             accelerator: 'CmdOrCtrl+A',
-            click: sendToFocusedBrowser("selectAll"),
+            click: sendToFocusedBrowser('selectAll'),
         },
 
     ]
 };
 
-var createWindow = function(fileName) {
-    var mainWindow = null;
+const createWindow = function(fileName) {
+    let mainWindow = null;
     mainWindow = new BrowserWindow({
         width: 1100,
         height: 800,
-        title: "guiflow -- " + (fileName ? fileName : "Untitled")
+        title: 'guiflow -- ' + (fileName ? fileName : 'Untitled')
     });
     mainWindow.loadURL('file://' + __dirname + '/index.html');
 
@@ -152,7 +154,7 @@ var createWindow = function(fileName) {
     });
     if (fileName) {
         setTimeout(function() {
-            mainWindow.webContents.send("open", fileName);
+            mainWindow.webContents.send('open', fileName);
         }, 1000);
     }
     if (process.env.DEBUG) {
@@ -161,13 +163,13 @@ var createWindow = function(fileName) {
 };
 
 app.on('ready', function() {
-    var fileName = process.argv[2];
-    var builtMenu = Menu.buildFromTemplate([
+    const fileName = process.argv[2];
+    const builtMenu = Menu.buildFromTemplate([
         mainMenu, fileMenu, editMenu
     ]);
-    app.on("browser-window-blur", function() {});
-    app.on("browser-window-focus", function() {});
+    app.on('browser-window-blur', function() {});
+    app.on('browser-window-focus', function() {});
     Menu.setApplicationMenu(builtMenu);
-    var firstWindow = createWindow(fileName);
-
+    //eslint-disable-next-line
+    const firstWindow = createWindow(fileName);
 });
