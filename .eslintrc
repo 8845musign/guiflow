@@ -5,13 +5,13 @@
     },
     "extends": [
         "eslint:recommended",
-        "plugin:prettier/recommended"
+        "prettier"
     ],
     "parserOptions": {
         "ecmaVersion": 2015
     },
     "rules": {
-    "quotes": [
+        "quotes": [
             "error",
             "single",
             { "avoidEscape": true, "allowTemplateLiterals": false }
