@@ -5,7 +5,7 @@ const dialog = window.requires.dialog;
 const clipboard = window.requires.clipboard;
 
 import 'ace-builds';
-ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.13/');
+import 'ace-builds/webpack-resolver';
 
 var editor;
 var EDITOR_FILE_NAME;
