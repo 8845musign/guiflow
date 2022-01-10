@@ -1,4 +1,3 @@
-var $ = require('./jquery-2.1.4.min');
 var fs = require('fs');
 var EventEmitter = require('events');
 var flumine = require('flumine');
@@ -13,7 +12,7 @@ var EDITOR_FILE_VALUE;
 
 var emitter = new EventEmitter();
 
-$(window).on('load', function() {
+window.addEventListener('load', () => {
     // eslint-disable-next-line
     editor = ace.edit('text');
     editor.$blockScrolling = Infinity;
@@ -36,8 +35,7 @@ $(window).on('load', function() {
             emitter.emit('change', now);
         }
     }, 500);
-
-});
+})
 
 // eslint-disable-next-line
 var waitEditorReady = flumine(function(d, ok, ng) {

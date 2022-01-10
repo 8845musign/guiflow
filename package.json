@@ -21,6 +21,7 @@
   "homepage": "https://github.com/hirokidaichi/guiflow",
   "dependencies": {
     "dialogs": "^2.0.1",
+    "electron": "^16.0.6",
     "electron-debug": "^3.2.0",
     "electron-windows-installer": "^1.7.8",
     "eslint": "^8.6.0",

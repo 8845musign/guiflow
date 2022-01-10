@@ -1,41 +1,10 @@
-//process.env.NODE_PATH = "./";
-if (process.platform == 'win32') {
-  //modulePaths.push();
-  var p = process.resourcesPath; //+ "\\app";
-  console.log(p);
-  module.paths.unshift(p + '\\app');
-  module.paths.unshift(p + '\\app.asar');
-  module.paths.unshift(p + '\\app\\node_modules');
-  module.paths.unshift(p + '\\app.asar\\node_modules');
-}
-var resolvePath = function (p) {
-  if (process.platform == 'win32') {
-    return p.replace(/^\.\//, '');
-  } else {
-    return p;
-  }
-};
-
+const ipcRenderer = window.requires.ipcRenderer;
 // eslint-disable-next-line
-var nodeModule = function () {
-  if (process.platform == 'win32') {
-    return 'node_modules/' + p;
-  } else {
-    return p;
-  }
-};
-var ipcRenderer = require('electron').ipcRenderer;
-// var remote = require("remote");
-// eslint-disable-next-line
-var fs = require('fs');
-// eslint-disable-next-line
-var flumine = require('flumine');
-// eslint-disable-next-line
-var $ = require(resolvePath('./js/jquery-2.1.4.min'));
+const flumine = window.requires.flumine;
 // var uiflow = remote.require("./app/uiflow");
-var editor = require(resolvePath('./js/editor'));
+var editor = window.requires.editor;
 // eslint-disable-next-line
-var diagram = require(resolvePath('./js/diagram'));
+var diagram = window.requires.diagram;
 
 [
   'open',
@@ -57,38 +26,39 @@ var sendToEditor = function (channel) {
 };
 
 // eslint-disable-next-line
-const { clipboard } = require('electron');
+const clipboard = window.requires.clipboard;
 // eslint-disable-next-line
 const { nativeImage } = require('electron');
 
-// var Menu = remote.require('menu');
-// var menu = Menu.buildFromTemplate([{
-//     label: "Undo",
-//     accelerator: 'CmdOrCtrl+Z',
-//     click: sendToEditor("undo"),
-// }, {
-//     label: "Redo",
-//     accelerator: 'CmdOrCtrl+Y',
-//     click: sendToEditor("redo"),
-// }, {
-//     type: 'separator'
-// }, {
-//     label: "Cut",
-//     accelerator: 'CmdOrCtrl+X',
-//     click: sendToEditor("cut"),
-// }, {
-//     label: "Copy",
-//     accelerator: 'CmdOrCtrl+C',
-//     click: sendToEditor("copy"),
-// }, {
-//     label: "Paste",
-//     accelerator: 'CmdOrCtrl+V',
-//     click: sendToEditor("paste"),
-// }, {
-//     label: "Select All",
-//     accelerator: 'CmdOrCtrl+A',
-//     click: sendToEditor("selectAll"),
-// }, ]);
+const Menu = window.requires.menu;
+// eslint-disable-next-line
+const menu = Menu.buildFromTemplate([{
+    label: 'Undo',
+    accelerator: 'CmdOrCtrl+Z',
+    click: sendToEditor('undo'),
+}, {
+    label: 'Redo',
+    accelerator: 'CmdOrCtrl+Y',
+    click: sendToEditor('redo'),
+}, {
+    type: 'separator'
+}, {
+    label: 'Cut',
+    accelerator: 'CmdOrCtrl+X',
+    click: sendToEditor('cut'),
+}, {
+    label: 'Copy',
+    accelerator: 'CmdOrCtrl+C',
+    click: sendToEditor('copy'),
+}, {
+    label: 'Paste',
+    accelerator: 'CmdOrCtrl+V',
+    click: sendToEditor('paste'),
+}, {
+    label: 'Select All',
+    accelerator: 'CmdOrCtrl+A',
+    click: sendToEditor('selectAll'),
+}, ]);
 
 // window.addEventListener('contextmenu', function(e) {
 //     e.preventDefault();
