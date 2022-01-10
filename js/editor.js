@@ -1,10 +1,10 @@
-var fs = require('fs');
-var EventEmitter = require('events');
-var flumine = require('flumine');
-var dialog = require('electron').remote.dialog;
-const { clipboard } = require('electron')
-require('ace-min-noconflict');
-require('ace-min-noconflict/theme-monokai');
+const fs = window.requires.fs;
+const EventEmitter = window.requires.EventEmitter;
+const flumine = window.requires.flumine;
+const dialog = window.requires.dialog;
+const clipboard = window.requires.clipboard;
+   
+import * as AceBuilds from 'ace-builds';
 
 var editor;
 var EDITOR_FILE_NAME;
