@@ -1,3 +1,5 @@
+console.log(window.requires);
+
 const ipcRenderer = window.requires.ipcRenderer;
 // eslint-disable-next-line
 const flumine = window.requires.flumine;
@@ -28,7 +30,7 @@ var sendToEditor = function (channel) {
 // eslint-disable-next-line
 const clipboard = window.requires.clipboard;
 // eslint-disable-next-line
-const { nativeImage } = require('electron');
+const nativeImage = window.requires.nativeImage;
 
 const Menu = window.requires.menu;
 // eslint-disable-next-line
@@ -66,7 +68,7 @@ const menu = Menu.buildFromTemplate([{
 // }, false);
 
 // eslint-disable-next-line
-var dialogs = require('dialogs')({});
+// var dialogs = require('dialogs')({});
 
 // $(function() {
 

@@ -2,14 +2,19 @@
   "name": "guiflow",
   "version": "0.1.0",
   "description": "a text editor",
-  "main": "src/main/index.js",
+  "main": "dist/main.js",
   "scripts": {
-    "start": "vite & DEBUG=true $(npm bin)/electron .",
+    "start": "npm run dev:serve & DEBUG=true $(npm bin)/electron .",
+    "serve": "DEBUG=true $(npm bin)/electron .",
     "clean": "$(npm bin)/gulp clean",
     "package": "$(npm bin)/gulp package",
     "lint": "eslint .",
-    "vite": "vite",
-    "vite:build": "vite build"
+    "dev": "webpack",
+    "dev:build": "npm run dev:build:main & npm run dev:build:renderer & npm run dev:build:preload",
+    "dev:build:main": "webpack --config-name main",
+    "dev:build:renderer": "webpack --config-name renderer",
+    "dev:build:preload": "webpack --config-name preload",
+    "dev:serve": "npm run dev:build:main && npm run dev:build:preload && webpack-dev-server --config-name renderer"
   },
   "repository": {
     "type": "git",
@@ -33,10 +38,12 @@
     "sprintf": "^0.1.5",
     "through2": "^4.0.2",
     "uiflow": "^1.1.8",
-    "vite": "^2.7.10"
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
   },
   "devDependencies": {
     "del": "^6.0.0",
-    "gulp-shell": "^0.8.0"
+    "html-webpack-plugin": "^5.5.0",
+    "webpack-dev-server": "^4.7.2"
   }
 }

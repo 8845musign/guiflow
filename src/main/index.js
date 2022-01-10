@@ -132,7 +132,7 @@ const editMenu = {
         label: 'Select All',
         accelerator: 'CmdOrCtrl+A',
         click: sendToFocusedBrowser('selectAll'),
-    },
+  },
 
     ]
 };
@@ -145,11 +145,11 @@ const createWindow = function (fileName) {
         title: 'guiflow -- ' + (fileName ? fileName : 'Untitled'),
         webPreferences: {
             contextIsolation: true,
-            preload: path.join(__dirname, '../../js/preload.js'),
+            preload: path.join(__dirname, 'preload.js'),
         }
     });
     // FIXME
-    mainWindow.loadURL('http://localhost:3000/');
+    mainWindow.loadURL(path.join('file://', __dirname, 'index.html'));
 
     mainWindow.on('closed', function () {
         mainWindow = null;

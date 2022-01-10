@@ -3,20 +3,21 @@ const EventEmitter = window.requires.EventEmitter;
 const flumine = window.requires.flumine;
 const dialog = window.requires.dialog;
 const clipboard = window.requires.clipboard;
-   
-import * as AceBuilds from 'ace-builds';
+
+import 'ace-builds';
+ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.13/');
 
 var editor;
 var EDITOR_FILE_NAME;
 var EDITOR_FILE_VALUE;
 
-var emitter = new EventEmitter();
+const emitter = new EventEmitter();
 
 window.addEventListener('load', () => {
     // eslint-disable-next-line
     editor = ace.edit('text');
     editor.$blockScrolling = Infinity;
-    if (process.platform === 'darwin') {
+    if (window.process.platform === 'darwin') {
         editor.commands.bindKey('Ctrl-P', 'golineup');
     }
     editor.setTheme('ace/theme/monokai');
@@ -38,7 +39,7 @@ window.addEventListener('load', () => {
 })
 
 // eslint-disable-next-line
-var waitEditorReady = flumine(function(d, ok, ng) {
+const waitEditorReady = flumine(function(d, ok, ng) {
     if (editor) {
         ok(d);
     } else {
