@@ -1,28 +1,21 @@
-console.log(window.requires);
-
-const ipcRenderer = window.requires.ipcRenderer;
-// eslint-disable-next-line
-const flumine = window.requires.flumine;
 // var uiflow = remote.require("./app/uiflow");
 import editor from './editor.js';
-// eslint-disable-next-line
 // import diagram from ('./diagram.js');
 
 [
-  'open',
-  'save',
-  'saveAs',
-  'undo',
-  'redo',
-  'cut',
+  // 'open',
+  // 'save',
+  // 'saveAs',
+  // 'undo',
+  // 'redo',
+  // 'cut',
   'copy',
-  'paste',
-  'selectAll',
-].forEach(function (channel) {
-  ipcRenderer.on(channel, editor[channel].listener(2));
+  // 'paste',
+  // 'selectAll',
+].forEach((channel) => {
+  window.api.on(channel, editor[channel]);
 });
 
-// eslint-disable-next-line
 var sendToEditor = function (channel) {
   return editor[channel];
 };
