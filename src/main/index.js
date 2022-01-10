@@ -145,10 +145,11 @@ const createWindow = function (fileName) {
         title: 'guiflow -- ' + (fileName ? fileName : 'Untitled'),
         webPreferences: {
             contextIsolation: true,
-            preload: path.join(__dirname, 'js/preload.js'),
+            preload: path.join(__dirname, '../../js/preload.js'),
         }
     });
-    mainWindow.loadURL('file://' + __dirname + '/index.html');
+    // FIXME
+    mainWindow.loadURL('http://localhost:3000/');
 
     mainWindow.on('closed', function () {
         mainWindow = null;

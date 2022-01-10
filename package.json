@@ -4,7 +4,7 @@
   "description": "a text editor",
   "main": "src/main/index.js",
   "scripts": {
-    "start": "DEBUG=true $(npm bin)/electron .",
+  "start": "vite & DEBUG=true $(npm bin)/electron .",
     "clean": "$(npm bin)/gulp clean",
     "package": "$(npm bin)/gulp package",
     "lint": "eslint .",

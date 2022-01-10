@@ -2,9 +2,9 @@ const ipcRenderer = window.requires.ipcRenderer;
 // eslint-disable-next-line
 const flumine = window.requires.flumine;
 // var uiflow = remote.require("./app/uiflow");
-var editor = window.requires.editor;
+import editor from './editor.js';
 // eslint-disable-next-line
-var diagram = window.requires.diagram;
+// import diagram from ('./diagram.js');
 
 [
   'open',

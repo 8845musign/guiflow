@@ -93,8 +93,8 @@ var copy = waitEditorReady.and(function() {
     var text = editor.getCopyText();
     clipboard.writeText(text);
 });
-// eslint-disable-next-line
-const app = module.exports = {
+
+export default {
     open: waitEditorReady.and(function(d, ok, ng) {
         var fileName = d[1];
         EDITOR_FILE_NAME = fileName;
