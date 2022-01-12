@@ -20,12 +20,12 @@
     "type": "git",
     "url": "https://github.com/hirokidaichi/guiflow.git"
   },
-  "author": "hirokidaichi",
+  "author": "8845musign",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hirokidaichi/guiflow/issues"
+    "url": "https://github.com/8845musign/guiflow/issues"
   },
-  "homepage": "https://github.com/hirokidaichi/guiflow",
+  "homepage": "https://github.com/8845musign/guiflow",
   "dependencies": {
     "ace-builds": "^1.4.13",
     "copy-webpack-plugin": "^10.2.0",
