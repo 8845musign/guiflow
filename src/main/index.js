@@ -2,6 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const { app, BrowserWindow, Menu, dialog } = require('electron')
+
 app.on('window-all-closed', function () {
     app.quit();
 });
@@ -145,7 +146,7 @@ const createWindow = function (fileName) {
         title: 'guiflow -- ' + (fileName ? fileName : 'Untitled'),
         webPreferences: {
             contextIsolation: true,
-            preload: path.join(__dirname, 'preload.js'),
+            preload: path.join(__dirname, './preload.js'),
         }
     });
     // FIXME

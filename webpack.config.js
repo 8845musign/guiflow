@@ -28,7 +28,7 @@ const rendererConfig = {
   name: 'renderer',
   target: 'electron-renderer',
   mode: 'development',
-  entry: './js/script.js',
+  entry: './src/renderer/index.js',
   output: {
     path: outputPath,
     filename: 'renderer.js'
@@ -47,7 +47,7 @@ const rendererConfig = {
     }),
     new CopyPlugin({
       patterns: [
-        { from: './css/main.css', to: './css' },
+        { from: './src/css/main.css', to: './css' },
       ],
     }),
   ],
@@ -58,7 +58,7 @@ const preloadConfig = {
   name: 'preload',
   target: 'electron-preload',
   mode: 'development',
-  entry: './js/preload.js',
+  entry: './src/preload/index.js',
   output: {
     path: outputPath,
     filename: 'preload.js'

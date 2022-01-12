@@ -1,6 +1,6 @@
 const { contextBridge, ipcRenderer, clipboard, dialog, nativeImage } = require('electron')
 const fs = require('fs');
-const uiflow = require('../app/uiflow');
+const uiflow = require('./uiflow');
 
 contextBridge.exposeInMainWorld(
     'requires', {
