@@ -175,3 +175,31 @@ app.whenReady().then(() => {
     //eslint-disable-next-line
     const firstWindow = createWindow(fileName);
 })
+
+const context = Menu.buildFromTemplate([{
+  label: 'Undo',
+  accelerator: 'CmdOrCtrl+Z',
+  click: sendToFocusedBrowser('undo'),
+}, {
+  label: 'Redo',
+  accelerator: 'CmdOrCtrl+Y',
+  click: sendToFocusedBrowser('redo'),
+}, {
+  type: 'separator'
+}, {
+  label: 'Cut',
+  accelerator: 'CmdOrCtrl+X',
+  click: sendToFocusedBrowser('cut'),
+}, {
+  label: 'Copy',
+  accelerator: 'CmdOrCtrl+C',
+  click: sendToFocusedBrowser('copy'),
+}, {
+  label: 'Paste',
+  accelerator: 'CmdOrCtrl+V',
+  click: sendToFocusedBrowser('paste'),
+}, {
+  label: 'Select All',
+  accelerator: 'CmdOrCtrl+A',
+  click: sendToFocusedBrowser('selectAll'),
+}, ]);

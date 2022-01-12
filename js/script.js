@@ -25,36 +25,6 @@ const clipboard = window.requires.clipboard;
 // eslint-disable-next-line
 const nativeImage = window.requires.nativeImage;
 
-const Menu = window.requires.menu;
-// eslint-disable-next-line
-const menu = Menu.buildFromTemplate([{
-    label: 'Undo',
-    accelerator: 'CmdOrCtrl+Z',
-    click: sendToEditor('undo'),
-}, {
-    label: 'Redo',
-    accelerator: 'CmdOrCtrl+Y',
-    click: sendToEditor('redo'),
-}, {
-    type: 'separator'
-}, {
-    label: 'Cut',
-    accelerator: 'CmdOrCtrl+X',
-    click: sendToEditor('cut'),
-}, {
-    label: 'Copy',
-    accelerator: 'CmdOrCtrl+C',
-    click: sendToEditor('copy'),
-}, {
-    label: 'Paste',
-    accelerator: 'CmdOrCtrl+V',
-    click: sendToEditor('paste'),
-}, {
-    label: 'Select All',
-    accelerator: 'CmdOrCtrl+A',
-    click: sendToEditor('selectAll'),
-}, ]);
-
 // window.addEventListener('contextmenu', function(e) {
 //     e.preventDefault();
 //     menu.popup(remote.getCurrentWindow());

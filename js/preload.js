@@ -1,14 +1,13 @@
 const { contextBridge, ipcRenderer, clipboard, dialog, nativeImage } = require('electron')
 const fs = require('fs');
 const EventEmitter = require('events');
-
 contextBridge.exposeInMainWorld(
     'requires', {
         dialog,
         clipboard,
         nativeImage,
         fs,
-        EventEmitter
+        EventEmitter,
     }
 );
 
