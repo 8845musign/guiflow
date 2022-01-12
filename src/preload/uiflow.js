@@ -1,21 +1,19 @@
-var fs = require('fs');
-var uiflow = require('uiflow');
-var flumine = require('flumine');
-var through2 = require('through2');
+const uiflow = require('uiflow');
+const flumine = require('flumine');
+const through2 = require('through2');
 
-var api = module.exports = {};
+const api = module.exports = {};
 
 api.update = function(inputFileName, code, format) {
-    var f = flumine(function(d, ok, ng) {
-        console.log('here')
-        var buff = [];
-        var output = through2(function(chunk, enc, cb) {
-            var svg = chunk;
+    const f = flumine(function(d, ok, ng) {
+        const buff = [];
+        const output = through2(function(chunk, enc, cb) {
+            const svg = chunk;
             buff.push(svg);
             cb();
 
         });
-        var stream = uiflow.buildWithCode(
+        const stream = uiflow.buildWithCode(
             inputFileName, code, format, function(error) {
                 console.log(inputFileName)
                 console.log(code)
@@ -25,7 +23,7 @@ api.update = function(inputFileName, code, format) {
             });
         stream.pipe(output);
         stream.on('end', function() {
-            var buffAll = Buffer.concat(buff);
+            const buffAll = Buffer.concat(buff);
             ok(buffAll);
             output.end();
         });
@@ -35,20 +33,20 @@ api.update = function(inputFileName, code, format) {
     return f();
 };
 
-var stringify = function(buff) {
-    var str = String(buff);
+const stringify = function(buff) {
+    const str = String(buff);
     return str;
 };
 
-var base64nize = function(buff) {
+const base64nize = function(buff) {
     return buff.toString('base64');
 };
 api.compile = function(code) {
     return flumine.set({
-        svg: flumine.to(function(d) {
+        svg: flumine.to(function() {
             return api.update('<anon>', code, 'svg');
         }).to(stringify),
-        meta: flumine.to(function(d) {
+        meta: flumine.to(function() {
             return api.update('<anon>', code, 'meta');
         }).to(stringify)
     })();
