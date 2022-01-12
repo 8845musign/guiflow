@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import editor from './editor.js';
-// import diagram from ('./diagram.js');
+import diagram from './diagram.js';
 
 [
   // 'open',
@@ -15,10 +15,6 @@ import editor from './editor.js';
 ].forEach((channel) => {
   window.api.on(channel, editor[channel]);
 });
-
-var sendToEditor = function (channel) {
-  return editor[channel];
-};
 
 // eslint-disable-next-line
 const clipboard = window.requires.clipboard;
@@ -67,16 +63,12 @@ $(function() {
 //     });
 
     editor.on('change', function(code) {
-        window.uiflow.compile(code).then(function(data) {
-                console.log('here2')
-                editor.clearError();
-                return data;
-            })
-            .then(() => {
-              console.log('here')
-            })
-            // .then(diagram.refresh)
-            // .catch(editor.setError);
+        window.uiflow.compile(code).then((data) => {
+          editor.clearError();
+          return data;
+      })
+      .then(diagram.refresh)
+      .catch(editor.setError);
     });
     editor.on('same', function(fileName) {
         document.title = 'guiflow -- ' + (fileName || 'Untitled') + ' = ';

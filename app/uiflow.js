@@ -1,13 +1,13 @@
-var fs = require("fs");
-var uiflow = require("uiflow");
-var flumine = require("flumine");
-var through2 = require("through2");
+var fs = require('fs');
+var uiflow = require('uiflow');
+var flumine = require('flumine');
+var through2 = require('through2');
 
 var api = module.exports = {};
 
 api.update = function(inputFileName, code, format) {
     var f = flumine(function(d, ok, ng) {
-
+        console.log('here')
         var buff = [];
         var output = through2(function(chunk, enc, cb) {
             var svg = chunk;
@@ -17,10 +17,14 @@ api.update = function(inputFileName, code, format) {
         });
         var stream = uiflow.buildWithCode(
             inputFileName, code, format, function(error) {
+                console.log(inputFileName)
+                console.log(code)
+                console.log(format)
+
                 ng(error);
             });
         stream.pipe(output);
-        stream.on("end", function() {
+        stream.on('end', function() {
             var buffAll = Buffer.concat(buff);
             ok(buffAll);
             output.end();
@@ -37,21 +41,21 @@ var stringify = function(buff) {
 };
 
 var base64nize = function(buff) {
-    return buff.toString("base64");
+    return buff.toString('base64');
 };
 api.compile = function(code) {
     return flumine.set({
         svg: flumine.to(function(d) {
-            return api.update("<anon>", code, "svg");
+            return api.update('<anon>', code, 'svg');
         }).to(stringify),
         meta: flumine.to(function(d) {
-            return api.update("<anon>", code, "meta");
+            return api.update('<anon>', code, 'meta');
         }).to(stringify)
     })();
 };
 
 api.base64png = function(code) {
     return flumine.to(function() {
-        return api.update("<anon>", code, "png");
+        return api.update('<anon>', code, 'png');
     }).to(base64nize)();
 };

@@ -28,7 +28,7 @@ window.addEventListener('load', () => {
     }
   }, 1000);
   var PREV = editor.getValue();
-  debugger;
+
   setInterval(function () {
     const now = editor.getValue();
     if (PREV !== now) {
@@ -161,9 +161,10 @@ export default {
   //     text: text,
   //   }]);
   // }),
-  // clearError: waitEditorReady.through(function () {
-  //   editor.getSession().setAnnotations([]);
-  // }),
+  clearError() {
+    // FIXME wait editor
+    editor.getSession().setAnnotations([])
+  },
   // navigateTo: waitEditorReady.through(function (d) {
   //   editor.navigateTo(d, 0);
   //   editor.focus();

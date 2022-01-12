@@ -1,7 +1,8 @@
-var $ = require('./jquery-2.1.4.min');
-var EventEmitter = require('events');
-var sprintf = require('sprintf');
+import $ from 'jquery';
+const EventEmitter = require('eventemitter3');
+import { sprintf } from'sprintf-js'
 var emitter = new EventEmitter();
+
 // eslint-disable-next-line
 var CURRENT_DOC;
 var svgElement = function() {
@@ -115,7 +116,7 @@ var refresh = function(data) {
     });
 };
 
-module.exports = {
+export default {
     refresh: refresh,
     on: function(channel, cb) {
         emitter.on(channel, cb);
