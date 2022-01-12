@@ -1,13 +1,13 @@
 const { contextBridge, ipcRenderer, clipboard, dialog, nativeImage } = require('electron')
 const fs = require('fs');
-const EventEmitter = require('events');
+const uiflow = require('../app/uiflow');
+
 contextBridge.exposeInMainWorld(
     'requires', {
         dialog,
         clipboard,
         nativeImage,
         fs,
-        EventEmitter,
     }
 );
 
@@ -20,5 +20,14 @@ contextBridge.exposeInMainWorld(
 contextBridge.exposeInMainWorld(
   'api', {
     on: (channel, callback) => ipcRenderer.on(channel, (event, argv) => callback(event, argv))
+  }
+)
+
+
+contextBridge.exposeInMainWorld(
+  'uiflow', {
+    'update': uiflow.update,
+    'compile': uiflow.compile,
+    'base64png': uiflow.base64png,
   }
 )

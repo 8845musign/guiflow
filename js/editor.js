@@ -1,7 +1,7 @@
 const fs = window.requires.fs;
-const EventEmitter = window.requires.EventEmitter;
 const dialog = window.requires.dialog;
 const clipboard = window.requires.clipboard;
+var EventEmitter = require('eventemitter3');
 
 import 'ace-builds';
 import 'ace-builds/webpack-resolver';
@@ -28,6 +28,7 @@ window.addEventListener('load', () => {
     }
   }, 1000);
   var PREV = editor.getValue();
+  debugger;
   setInterval(function () {
     const now = editor.getValue();
     if (PREV !== now) {

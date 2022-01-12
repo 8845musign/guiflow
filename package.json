@@ -6,15 +6,15 @@
   "scripts": {
     "start": "npm run dev:build && npm run serve",
     "serve": "DEBUG=true $(npm bin)/electron .",
-    "clean": "$(npm bin)/gulp clean",
     "package": "$(npm bin)/gulp package",
     "lint": "eslint .",
     "dev": "webpack",
-    "dev:build": "npm run dev:build:main & npm run dev:build:renderer & npm run dev:build:preload",
+    "dev:build": "npm run clean & npm run dev:build:main & npm run dev:build:renderer & npm run dev:build:preload",
     "dev:build:main": "webpack --config-name main",
     "dev:build:renderer": "webpack --config-name renderer",
     "dev:build:preload": "webpack --config-name preload",
-    "dev:serve": "npm run dev:build:main && npm run dev:build:preload && webpack-dev-server --config-name renderer"
+    "dev:serve": "npm run dev:build:main && npm run dev:build:preload && webpack-dev-server --config-name renderer",
+    "clean": "rimraf ./dist"
   },
   "repository": {
     "type": "git",
@@ -33,7 +33,10 @@
     "eslint": "^8.6.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "eventemitter3": "^4.0.7",
     "file-loader": "^6.2.0",
+    "flumine": "^0.1.8",
+    "jquery": "^3.6.0",
     "prettier": "^2.5.1",
     "sprintf": "^0.1.5",
     "through2": "^4.0.2",
@@ -42,8 +45,9 @@
     "webpack-cli": "^4.9.1"
   },
   "devDependencies": {
-    "del": "^6.0.0",
+    "copy-webpack-plugin": "^10.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "rimraf": "^3.0.2",
     "webpack-dev-server": "^4.7.2"
   }
 }

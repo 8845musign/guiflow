@@ -1,4 +1,4 @@
-// var uiflow = remote.require("./app/uiflow");
+import $ from 'jquery';
 import editor from './editor.js';
 // import diagram from ('./diagram.js');
 
@@ -33,11 +33,11 @@ const nativeImage = window.requires.nativeImage;
 // eslint-disable-next-line
 // var dialogs = require('dialogs')({});
 
-// $(function() {
+$(function() {
 
-//     $(window).on("load resize", function() {
-//         $(".main").height($(window).height());
-//     });
+    $(window).on('load resize', function() {
+        $('.main').height($(window).height());
+    });
 //     $("#download").click(function(e) {
 //         editor.value.and(function(code) {
 //             return uiflow.update("<anon>", code, "svg");
@@ -66,24 +66,28 @@ const nativeImage = window.requires.nativeImage;
 //         })();
 //     });
 
-//     editor.on("change", function(code) {
-//         uiflow.compile(code).then(function(data) {
-//                 editor.clearError();
-//                 return data;
-//             })
-//             .then(diagram.refresh)
-//             .catch(editor.setError);
-//     });
-//     editor.on("same", function(fileName) {
-//         document.title = "guiflow -- " + (fileName || "Untitled") + " = ";
-//     });
-//     editor.on("diff", function(fileName) {
-//         document.title = "guiflow -- " + (fileName || "Untitled") + " + ";
-//     });
+    editor.on('change', function(code) {
+        window.uiflow.compile(code).then(function(data) {
+                console.log('here2')
+                editor.clearError();
+                return data;
+            })
+            .then(() => {
+              console.log('here')
+            })
+            // .then(diagram.refresh)
+            // .catch(editor.setError);
+    });
+    editor.on('same', function(fileName) {
+        document.title = 'guiflow -- ' + (fileName || 'Untitled') + ' = ';
+    });
+    editor.on('diff', function(fileName) {
+        document.title = 'guiflow -- ' + (fileName || 'Untitled') + ' + ';
+    });
 //     diagram.on("page-click", function(lines) {
 //         editor.navigateTo(lines);
 //     });
 //     diagram.on("end-click", function(text) {
 //         editor.insert(text);
 //     });
-// });
+});
