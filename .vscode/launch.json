@@ -10,8 +10,11 @@
       "windows": {
         "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
       },
-      "program": "${workspaceRoot}/dist/main.js",
-      "protocol": "inspector"
+      "args" : ["."],
+      "program": "${workspaceRoot}/src/main/index.js",
+      "outFiles": [
+        "${workspaceRoot}/dist/**/*.js",
+      ],
     },
     {
       "name": "Debug Renderer Process",
@@ -28,3 +31,4 @@
       "webRoot": "${workspaceRoot}"
     }
   ]
+}
