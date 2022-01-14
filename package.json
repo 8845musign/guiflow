@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "dev": "webpack",
     "dev:build": "npm run clean & npm run dev:build:main & npm run dev:build:renderer & npm run dev:build:preload",
+    "dev:watch": "npm run clean & webpack --watch",
     "dev:build:main": "webpack --config-name main",
     "dev:build:renderer": "webpack --config-name renderer",
     "dev:build:preload": "webpack --config-name preload",
