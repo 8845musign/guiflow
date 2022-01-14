@@ -1,5 +1,4 @@
 const fs = window.requires.fs;
-const dialog = window.requires.dialog;
 const clipboard = window.requires.clipboard;
 var EventEmitter = require('eventemitter3');
 
@@ -14,7 +13,7 @@ const emitter = new EventEmitter();
 
 window.addEventListener('load', () => {
   // eslint-disable-next-line
-  editor = ace.edit('text');
+  editor = ace.edit("text");
   editor.$blockScrolling = Infinity;
   if (window.process.platform === 'darwin') {
     editor.commands.bindKey('Ctrl-P', 'golineup');
@@ -36,44 +35,42 @@ window.addEventListener('load', () => {
       emitter.emit('change', now);
     }
   }, 500);
-})
+});
 
-const waitEditorReady = (arg) => {
+const waitEditorReady = () => {
   return new Promise((res) => {
     if (editor) {
-      res(arg)
+      res();
     } else {
       const id = setInterval(() => {
         if (editor) {
           clearInterval(id);
-          res(arg)
+          res();
         }
-      }, 200)
+      });
     }
-  })
-}
+  });
+};
 
 const getFileName = (forceDialog) => {
   return new Promise((res) => {
     if (!forceDialog && EDITOR_FILE_NAME) {
       return res(EDITOR_FILE_NAME);
     } else {
-      dialog.showSaveDialog({
-        title: 'save file',
-        filters: [{
-          name: 'Documents',
-          extensions: ['txt', 'md', 'text']
-        },],
-      }, function (fileName) {
+      const result = window.file.save()
+      
+      result.then((fileName) => {
         if (fileName) {
           res(fileName);
         } else {
           res();
         }
+      }).catch((err) => {
+        console.error(err);
       });
     }
   });
-}
+};
 
 const saveFile = (fileName) => {
   return new Promise((res, rej) => {
@@ -82,8 +79,7 @@ const saveFile = (fileName) => {
     }
     var code = editor.getValue();
     fs.writeFile(fileName, code, function (err) {
-      if (err)
-        return rej(err);
+      if (err) return rej(err);
       EDITOR_FILE_NAME = fileName;
       EDITOR_FILE_VALUE = code;
       return res(fileName);
@@ -96,8 +92,8 @@ const copy = () => {
     const text = editor.getCopyText();
     clipboard.writeText(text);
     res();
-  })
-}
+  });
+};
 
 export default {
   // open: waitEditorReady.and(function (d, ok, ng) {
@@ -116,9 +112,11 @@ export default {
   //     }
   //   });
   // }),
-  // save: waitEditorReady
-  //   .and(getFileName(false))
-  //   .and(saveFile),
+  save() {
+    getFileName(false).then((fileName) => {
+      saveFile(fileName);
+    });
+  },
   // saveAs: waitEditorReady
   //   .and(getFileName(true))
   //   .and(saveFile),
@@ -134,11 +132,11 @@ export default {
   //   var target = editor.getSelectionRange();
   //   editor.getSession().getDocument().remove(target);
   // }),
-    copy: () => {
-      return waitEditorReady.then(() => {
-        return copy();
-      });
-    },
+  copy: () => {
+    return waitEditorReady.then(() => {
+      return copy();
+    });
+  },
   // paste: waitEditorReady.and(function () {
   //   var text = clipboard.readText();
   //   editor.insert(text);
@@ -163,7 +161,7 @@ export default {
   // }),
   clearError() {
     // FIXME wait editor
-    editor.getSession().setAnnotations([])
+    editor.getSession().setAnnotations([]);
   },
   // navigateTo: waitEditorReady.through(function (d) {
   //   editor.navigateTo(d, 0);
