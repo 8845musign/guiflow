@@ -33,10 +33,6 @@
         "--remote-debugging-port=9222"
       ],
       "webRoot": "${workspaceRoot}",
-      "program": "${workspaceRoot}/src/main/index.js",
-      "outFiles": [
-        "${workspaceRoot}/dist/**/*.js",
-      ],
       "env": {
         "DEBUG": "true"
       },
