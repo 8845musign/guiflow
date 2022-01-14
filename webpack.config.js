@@ -21,7 +21,7 @@ const mainConfig = {
       }
     ]
   },
-  devtool: 'eval'
+  devtool: 'inline-source-map'
 }
 
 const rendererConfig = {
@@ -51,7 +51,7 @@ const rendererConfig = {
       ],
     }),
   ],
-  devtool: 'eval'
+  devtool: 'inline-source-map'
 }
 
 const preloadConfig = {
@@ -71,7 +71,7 @@ const preloadConfig = {
       }
     ]
   },
-  devtool: 'eval'
+  devtool: 'inline-source-map'
 }
 
 module.exports = [
