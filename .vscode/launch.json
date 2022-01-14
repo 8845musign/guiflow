@@ -10,11 +10,15 @@
       "windows": {
         "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
       },
-      "args" : ["."],
-      "program": "${workspaceRoot}/src/main/index.js",
-      "outFiles": [
-        "${workspaceRoot}/dist/**/*.js",
+      "webRoot": "${workspaceRoot}",
+      "args": [
+        "."
       ],
+      "program": "${workspaceRoot}/dist/main.js",
+      "sourceMaps": true,
+      "env": {
+        "DEBUG": "true"
+      },
     },
     {
       "name": "Debug Renderer Process",
@@ -28,7 +32,14 @@
         "${workspaceRoot}/dist/main.js",
         "--remote-debugging-port=9222"
       ],
-      "webRoot": "${workspaceRoot}"
+      "webRoot": "${workspaceRoot}",
+      "program": "${workspaceRoot}/src/main/index.js",
+      "outFiles": [
+        "${workspaceRoot}/dist/**/*.js",
+      ],
+      "env": {
+        "DEBUG": "true"
+      },
     }
   ]
 }
