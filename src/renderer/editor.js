@@ -96,22 +96,30 @@ const copy = () => {
 };
 
 export default {
-  // open: waitEditorReady.and(function (d, ok, ng) {
-  //   var fileName = d[1];
-  //   EDITOR_FILE_NAME = fileName;
-  //   fs.readFile(fileName, function (err, cont) {
-  //     if (err) {
-  //       ng(err);
-  //     } else {
-  //       var code = String(cont);
-  //       EDITOR_FILE_VALUE = code;
-  //       editor.setValue(code);
-  //       editor.navigateLineEnd();
-  //       editor.focus();
-  //       ok(cont);
-  //     }
-  //   });
-  // }),
+  open: (_, fileName) => {
+    EDITOR_FILE_NAME = fileName;
+
+    try {
+      EDITOR_FILE_NAME = fileName;
+      const code = fs.readFileSync(fileName, {
+        encoding: 'UTF-8',
+      });
+  
+      EDITOR_FILE_VALUE = code;
+
+      const set = setInterval(() => {
+        if (editor) {
+          editor.setValue(code);
+          editor.navigateLineEnd();
+          editor.focus();
+          clearInterval(set);
+        }
+      }, 100)
+      
+    } catch(error) {
+      console.error(error)
+    }
+  },
   save() {
     getFileName(false).then((fileName) => {
       saveFile(fileName);

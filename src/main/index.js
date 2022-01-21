@@ -18,6 +18,7 @@ const warn = function (message) {
     buttons: ['close'],
   });
 };
+
 const sendToFocusedBrowser = function (channel) {
   return function () {
     const win = BrowserWindow.getFocusedWindow();
@@ -27,6 +28,7 @@ const sendToFocusedBrowser = function (channel) {
     win.webContents.send(channel);
   };
 };
+
 const mainMenu = {
   label: app.getName(),
   submenu: [
@@ -86,8 +88,9 @@ const fileMenu = {
     {
       label: 'Open...',
       accelerator: 'CmdOrCtrl+O',
-      click: function () {
-        dialog.showOpenDialog(
+      
+      click: async () => {
+        const result = await dialog.showOpenDialog(
           {
             defaultPath: app.getPath('userDesktop'),
             properties: ['openFile'],
@@ -98,12 +101,11 @@ const fileMenu = {
               },
             ],
           },
-          function (fileNames) {
-            if (fileNames) {
-              createWindow(fileNames[0]);
-            }
-          }
         );
+
+        if (result.canceled) return;
+        
+        createWindow(result.filePaths[0])
       },
     },
     {
@@ -176,10 +178,12 @@ const createWindow = function (fileName) {
   mainWindow.on('closed', function () {
     mainWindow = null;
   });
+
+  // FIXME wait?
   if (fileName) {
-    setTimeout(function () {
+    setTimeout(() => {
       mainWindow.webContents.send('open', fileName);
-    }, 1000);
+    }, 3000)
   }
   if (process.env.DEBUG) {
     mainWindow.toggleDevTools();
@@ -244,8 +248,6 @@ ipcMain.handle('save', async () => {
         },
       ],
     });
-
-    console.log(result);
 
     if (result.canceled) return '';
 

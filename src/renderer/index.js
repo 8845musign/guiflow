@@ -3,7 +3,7 @@ import editor from './editor.js';
 import diagram from './diagram.js';
 
 [
-  // 'open',
+  'open',
   'save',
   // 'saveAs',
   // 'undo',
