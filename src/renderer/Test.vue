@@ -1,19 +1,24 @@
 <template>
-  <div>test</div>
+  <VAceEditor v-model:value="editorValue" class="Editor" />
 </template>
 
 <script>
-import { defineComponent } from "vue"
+import { defineComponent, ref } from "vue"
+import { VAceEditor } from 'vue3-ace-editor'
 
 export default defineComponent({
+  components: {
+    VAceEditor
+  },
   setup(props) {
-      return {}
+    const editorValue = ref('');
+      return { editorValue }
   }
 })
 </script>
 
 <style scoped>
-  div {
-    background-color: red;
+  .Editor {
+    height: 100px;
   }
 </style>
