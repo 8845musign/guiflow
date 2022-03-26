@@ -1,3 +1,5 @@
+import './App';
+
 import $ from 'jquery';
 import editor from './editor.js';
 import diagram from './diagram.js';

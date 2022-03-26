@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 
 const outputPath = path.join(__dirname, 'dist');
 
@@ -18,7 +19,7 @@ const mainConfig = {
       {
         test: /\.js$/,
         exclude: /node_modules/
-      }
+      },
     ]
   },
   devtool: 'inline-source-map'
@@ -38,6 +39,17 @@ const rendererConfig = {
       {
         test: /\.js$/,
         exclude: /node_modules/
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          'css-loader'
+        ]
       }
     ]
   },
@@ -50,8 +62,9 @@ const rendererConfig = {
         { from: './src/css/main.css', to: './css' },
       ],
     }),
+    new VueLoaderPlugin()
   ],
-  devtool: 'inline-source-map'
+  devtool: 'inline-source-map',
 }
 
 const preloadConfig = {
