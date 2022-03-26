@@ -64,6 +64,11 @@ const rendererConfig = {
     }),
     new VueLoaderPlugin()
   ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src/renderer')
+    }
+  },
   devtool: 'inline-source-map',
 }
 

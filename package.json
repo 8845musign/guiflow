@@ -38,6 +38,7 @@
     "flumine": "^0.1.8",
     "html-webpack-plugin": "^5.5.0",
     "jquery": "^3.6.0",
+    "pinia": "^2.0.12",
     "rimraf": "^3.0.2",
     "sprintf": "^0.1.5",
     "sprintf-js": "^1.1.2",
