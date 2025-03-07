@@ -1,9 +1,14 @@
-import { createApp } from 'vue';
-import { createPinia } from 'pinia';
-import Test from './Test.vue';
+import React, { useState, useEffect } from 'react';
+import Editor from './Editor';
 
-const app = createApp(Test)
+function App() {
+  const [value, setValue] = useState('');
 
-app.use(createPinia())
+  return (
+    <div className="editor-container">
+      <Editor value={value} onChange={setValue} />
+    </div>
+  );
+}
 
-app.mount('#app')
+export default App;

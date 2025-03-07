@@ -1,8 +1,14 @@
-import './App';
-
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App';
 import $ from 'jquery';
 import editor from './editor.js';
 import diagram from './diagram.js';
+
+// Reactコンポーネントをレンダリング
+const container = document.getElementById('app');
+const root = createRoot(container);
+root.render(<App />);
 
 [
   'open',

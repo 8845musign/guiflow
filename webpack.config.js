@@ -1,7 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-const { VueLoaderPlugin } = require('vue-loader')
 
 const outputPath = path.join(__dirname, 'dist');
 
@@ -18,7 +17,13 @@ const mainConfig = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
       },
     ]
   },
@@ -37,17 +42,19 @@ const rendererConfig = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/
-      },
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
+        }
       },
       {
         test: /\.css$/,
         use: [
-          'vue-style-loader',
+          'style-loader',
           'css-loader'
         ]
       }
@@ -62,9 +69,9 @@ const rendererConfig = {
         { from: './src/css/main.css', to: './css' },
       ],
     }),
-    new VueLoaderPlugin()
   ],
   resolve: {
+    extensions: ['.js', '.jsx'],
     alias: {
       '@': path.resolve(__dirname, 'src/renderer')
     }
@@ -85,7 +92,13 @@ const preloadConfig = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
       }
     ]
   },
