@@ -15,7 +15,8 @@
     "dev:build:renderer": "npx webpack --config-name renderer",
     "dev:build:preload": "npx webpack --config-name preload",
     "dev:serve": "npm run dev:build:main && npm run dev:build:preload && npx webpack-dev-server --config-name renderer",
-    "clean": "npx rimraf ./dist"
+    "clean": "npx rimraf ./dist",
+    "type-check": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
   "homepage": "https://github.com/8845musign/guiflow",
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
+    "@types/node": "^20.11.30",
     "ace-builds": "^1.39.0",
     "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",
@@ -53,11 +55,19 @@
     "@babel/core": "^7.24.0",
     "@babel/preset-env": "^7.24.0",
     "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.24.0",
+    "@types/jquery": "^3.5.29",
+    "@types/react": "^18.2.69",
+    "@types/react-dom": "^18.2.22",
+    "@types/sprintf-js": "^1.1.4",
+    "@types/through2": "^2.0.41",
     "babel-loader": "^9.1.3",
     "eslint": "^9.21.0",
     "eslint-config-prettier": "^10.0.2",
     "eslint-plugin-prettier": "^5.2.3",
     "prettier": "^3.5.3",
-    "style-loader": "^3.3.4"
+    "style-loader": "^3.3.4",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5"
   }
 }

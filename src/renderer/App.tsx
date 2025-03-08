@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Editor from './Editor';
 
-function App() {
-  const [value, setValue] = useState('');
+function App(): JSX.Element {
+  const [value, setValue] = useState<string>('');
 
   return (
     <div className="editor-container">

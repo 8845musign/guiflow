@@ -1,35 +1,42 @@
 import React, { useRef, useEffect } from 'react';
 import { Editor as MonacoEditor } from '@monaco-editor/react';
-import editor from './editor.js';
+import editor from './editorModule';
 
-function Editor({ value, onChange }) {
-  const editorRef = useRef(null);
+interface EditorProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+function Editor({ value, onChange }: EditorProps): JSX.Element {
+  const editorRef = useRef<any>(null);
 
   useEffect(() => {
     // エディターが初期化された後、既存のeditor.jsモジュールと連携
     if (editorRef.current) {
-      const originalSetValue = editor.setValue;
+      const originalSetValue = (editor as any).setValue;
       
       // 既存のeditor.jsのsetValue関数をオーバーライド
-      editor.setValue = (newValue) => {
+      (editor as any).setValue = (newValue: string) => {
         onChange(newValue);
         return originalSetValue.call(editor, newValue);
       };
       
       // 既存のeditor.jsの初期値を設定
       if (value) {
-        editor.setValue(value);
+        (editor as any).setValue(value);
       }
     }
   }, [editorRef.current]);
 
-  const handleEditorDidMount = (editor) => {
+  const handleEditorDidMount = (editor: any) => {
     editorRef.current = editor;
   };
 
-  const handleChange = (value) => {
-    onChange(value);
-    editor.emit('change', value);
+  const handleChange = (value: string | undefined) => {
+    if (value !== undefined) {
+      onChange(value);
+      (editor as any).emit('change', value);
+    }
   };
 
   return (

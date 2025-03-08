@@ -8,7 +8,7 @@ const mainConfig = {
   name: 'main',
   target: 'electron-main',
   mode: 'development',
-  entry: './src/main/index.js',
+  entry: './src/main/index.ts',
   output: {
     path: outputPath,
     filename: 'main.js'
@@ -16,16 +16,19 @@ const mainConfig = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|ts)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
+            presets: ['@babel/preset-env', '@babel/preset-typescript']
           }
         }
       },
     ]
+  },
+  resolve: {
+    extensions: ['.ts', '.js']
   },
   devtool: 'inline-source-map'
 }
@@ -34,7 +37,7 @@ const rendererConfig = {
   name: 'renderer',
   target: 'electron-renderer',
   mode: 'development',
-  entry: './src/renderer/index.js',
+  entry: './src/renderer/index.tsx',
   output: {
     path: outputPath,
     filename: 'renderer.js'
@@ -42,12 +45,12 @@ const rendererConfig = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
+            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript']
           }
         }
       },
@@ -71,7 +74,7 @@ const rendererConfig = {
     }),
   ],
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
     alias: {
       '@': path.resolve(__dirname, 'src/renderer')
     }
@@ -83,7 +86,7 @@ const preloadConfig = {
   name: 'preload',
   target: 'electron-preload',
   mode: 'development',
-  entry: './src/preload/index.js',
+  entry: './src/preload/index.ts',
   output: {
     path: outputPath,
     filename: 'preload.js'
@@ -91,16 +94,19 @@ const preloadConfig = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|ts)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
+            presets: ['@babel/preset-env', '@babel/preset-typescript']
           }
         }
       }
     ]
+  },
+  resolve: {
+    extensions: ['.ts', '.js']
   },
   devtool: 'inline-source-map'
 }
