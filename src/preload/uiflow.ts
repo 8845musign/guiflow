@@ -1,5 +1,4 @@
 import * as uiflow from "uiflow";
-import * as flumine from "flumine";
 import * as through2 from "through2";
 import { Buffer } from "buffer";
 
@@ -20,11 +19,7 @@ api.update = function (
   code: string,
   format: "dot" | "meta" | "json" | "png" | "svg",
 ): Promise<Buffer> {
-  const f = flumine(function (
-    d: any,
-    ok: (value: Buffer) => void,
-    ng: (error: Error) => void,
-  ) {
+  return new Promise((resolve, reject) => {
     const buff: Buffer[] = [];
     const output = through2.default(function (
       chunk: Buffer,
@@ -44,19 +39,17 @@ api.update = function (
         console.log(inputFileName);
         console.log(code);
         console.log(format);
-        ng(error);
+        reject(error);
       },
     );
 
     stream.pipe(output);
     stream.on("end", function () {
       const buffAll = Buffer.concat(buff);
-      ok(buffAll);
+      resolve(buffAll);
       output.end();
     });
   });
-
-  return f();
 };
 
 const stringify = function (buff: Buffer): string {
@@ -68,27 +61,21 @@ const base64nize = function (buff: Buffer): string {
   return buff.toString("base64");
 };
 
-api.compile = function (code: string): Promise<{ svg: string; meta: string }> {
-  return flumine.set({
-    svg: flumine
-      .to(function () {
-        return api.update("<anon>", code, "svg");
-      })
-      .to(stringify),
-    meta: flumine
-      .to(function () {
-        return api.update("<anon>", code, "meta");
-      })
-      .to(stringify),
-  })();
+api.compile = async function (code: string): Promise<{ svg: string; meta: string }> {
+  const svgPromise = api.update("<anon>", code, "svg").then(stringify);
+  const metaPromise = api.update("<anon>", code, "meta").then(stringify);
+  
+  const [svg, meta] = await Promise.all([svgPromise, metaPromise]);
+  
+  return {
+    svg,
+    meta
+  };
 };
 
-api.base64png = function (code: string): Promise<string> {
-  return flumine
-    .to(function () {
-      return api.update("<anon>", code, "png");
-    })
-    .to(base64nize)();
+api.base64png = async function (code: string): Promise<string> {
+  const buffer = await api.update("<anon>", code, "png");
+  return base64nize(buffer);
 };
 
 export default api;
