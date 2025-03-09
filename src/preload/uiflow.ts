@@ -1,4 +1,4 @@
-import { default as uiflow } from "@kexi/uiflow";
+import * as uiflow from "uiflow";
 import * as flumine from "flumine";
 import * as through2 from "through2";
 import { Buffer } from "buffer";
