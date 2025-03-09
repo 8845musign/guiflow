@@ -26,8 +26,7 @@ api.update = function (
     ng: (error: Error) => void,
   ) {
     const buff: Buffer[] = [];
-    // through2.objを使用するか、through2.defaultを使用する
-    const output = through2.obj(function (
+    const output = through2.default(function (
       chunk: Buffer,
       enc: string,
       cb: () => void,
