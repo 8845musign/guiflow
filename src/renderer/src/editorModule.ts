@@ -1,6 +1,6 @@
-import EventEmitter from 'eventemitter3';
-import 'ace-builds';
-import 'ace-builds/webpack-resolver';
+import EventEmitter from "eventemitter3";
+import "ace-builds";
+import "ace-builds/webpack-resolver";
 
 const fs = window.requires.fs;
 const clipboard = window.requires.clipboard;
@@ -11,23 +11,23 @@ let EDITOR_FILE_VALUE: string | undefined;
 
 const emitter = new EventEmitter();
 
-window.addEventListener('load', () => {
+window.addEventListener("load", () => {
   // eslint-disable-next-line
-  editor = window.ace.edit('text');
+  editor = window.ace.edit("text");
   if (editor) {
     editor.$blockScrolling = Infinity;
-    if (window.process.platform === 'darwin') {
-      editor.commands.bindKey('Ctrl-P', 'golineup');
+    if (window.process.platform === "darwin") {
+      editor.commands.bindKey("Ctrl-P", "golineup");
     }
-    editor.setTheme('ace/theme/monokai');
+    editor.setTheme("ace/theme/monokai");
     setInterval(function () {
       if (editor && editor.getValue() !== EDITOR_FILE_VALUE) {
-        emitter.emit('diff', EDITOR_FILE_NAME);
+        emitter.emit("diff", EDITOR_FILE_NAME);
       } else {
-        emitter.emit('same', EDITOR_FILE_NAME);
+        emitter.emit("same", EDITOR_FILE_NAME);
       }
     }, 1000);
-    
+
     let PREV = editor.getValue();
 
     setInterval(function () {
@@ -35,7 +35,7 @@ window.addEventListener('load', () => {
         const now = editor.getValue();
         if (PREV !== now) {
           PREV = now;
-          emitter.emit('change', now);
+          emitter.emit("change", now);
         }
       }
     }, 500);
@@ -82,19 +82,19 @@ const getFileName = (forceDialog: boolean): Promise<string | undefined> => {
 const saveFile = (fileName?: string): Promise<string> => {
   return new Promise((res, rej) => {
     if (!fileName) {
-      return res('canceled');
+      return res("canceled");
     }
     if (!editor) {
-      return rej(new Error('Editor not initialized'));
+      return rej(new Error("Editor not initialized"));
     }
-    
+
     const code = editor.getValue();
-    fs.writeFile(fileName, code, function (err: Error | null) {
-      if (err) return rej(err);
-      EDITOR_FILE_NAME = fileName;
-      EDITOR_FILE_VALUE = code;
-      return res(fileName);
-    });
+    // fs.writeFile(fileName, code, function (err: Error | null) {
+    //   if (err) return rej(err);
+    //   EDITOR_FILE_NAME = fileName;
+    //   EDITOR_FILE_VALUE = code;
+    //   return res(fileName);
+    // });
   });
 };
 
@@ -105,7 +105,7 @@ const copy = (): Promise<void> => {
       return;
     }
     const text = editor.getCopyText();
-    clipboard.writeText(text);
+    // clipboard.writeText(text);
     res();
   });
 };
@@ -124,32 +124,30 @@ const editorApi: EditorApi = {
     EDITOR_FILE_NAME = fileName;
 
     try {
-      EDITOR_FILE_NAME = fileName;
-      const code = fs.readFileSync(fileName, {
-        encoding: 'utf-8',
-      });
-
-      EDITOR_FILE_VALUE = code;
-
-      const set = setInterval(() => {
-        if (editor) {
-          editor.setValue(code);
-          editor.navigateLineEnd();
-          editor.focus();
-          clearInterval(set);
-        }
-      }, 100);
+      // EDITOR_FILE_NAME = fileName;
+      // const code = fs.readFileSync(fileName, {
+      //   encoding: "utf-8",
+      // });
+      // EDITOR_FILE_VALUE = code;
+      // const set = setInterval(() => {
+      //   if (editor) {
+      //     editor.setValue(code);
+      //     editor.navigateLineEnd();
+      //     editor.focus();
+      //     clearInterval(set);
+      //   }
+      // }, 100);
     } catch (error) {
       console.error(error);
     }
   },
-  
+
   save() {
     getFileName(false).then((fileName) => {
       saveFile(fileName);
     });
   },
-  
+
   saveAs: async () => {
     await waitEditorReady();
     const fileName = await getFileName(true);
@@ -160,13 +158,13 @@ const editorApi: EditorApi = {
     await waitEditorReady();
     return copy();
   },
-  
+
   clearError() {
     if (editor) {
       editor.getSession().setAnnotations([]);
     }
   },
-  
+
   on: function (channel: string, cb: (...args: any[]) => void) {
     emitter.on(channel, cb);
   },

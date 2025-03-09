@@ -1,5 +1,5 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
+import ReactDOM from "react-dom/client";
 import App from "./App";
 import $ from "jquery";
 import editor from "./editorModule";
@@ -7,9 +7,9 @@ import diagram from "./diagram";
 
 // Reactコンポーネントをレンダリング
 const container = document.getElementById("app");
+
 if (container) {
-  const root = createRoot(container);
-  root.render(<App />);
+  ReactDOM.createRoot(container).render(<App />);
 }
 
 [
@@ -55,11 +55,11 @@ $(function () {
         console.error(error);
       });
   });
-  
+
   editor.on("same", function (fileName: string | undefined) {
     document.title = "guiflow -- " + (fileName || "Untitled") + " = ";
   });
-  
+
   editor.on("diff", function (fileName: string | undefined) {
     document.title = "guiflow -- " + (fileName || "Untitled") + " + ";
   });

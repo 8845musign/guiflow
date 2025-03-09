@@ -1,11 +1,10 @@
 import * as path from "path";
 import { app, BrowserWindow, Menu, dialog, ipcMain } from "electron";
+import { is } from "@electron-toolkit/utils";
 
 app.on("window-all-closed", function () {
   app.quit();
 });
-
-import { exec } from "child_process";
 
 const warn = function (message: string): void {
   dialog.showMessageBox({
@@ -66,7 +65,7 @@ const mainMenu = {
       click: function () {
         const win = BrowserWindow.getFocusedWindow();
         if (win) {
-          win.toggleDevTools();
+          win.webContents.toggleDevTools();
         }
       },
     },
@@ -89,7 +88,7 @@ const fileMenu = {
 
       click: async () => {
         const result = await dialog.showOpenDialog({
-          defaultPath: app.getPath("userDesktop"),
+          defaultPath: app.getPath("desktop"),
           properties: ["openFile"],
           filters: [
             {
@@ -158,33 +157,40 @@ const editMenu = {
 };
 
 const createWindow = function (fileName?: string): BrowserWindow {
-  let mainWindow = new BrowserWindow({
+  let win = new BrowserWindow({
     width: 1100,
     height: 800,
+    show: false,
     title: "guiflow -- " + (fileName ? fileName : "Untitled"),
     webPreferences: {
       nodeIntegration: true,
-      preload: path.join(__dirname, "preload.js"),
+      preload: path.join(__dirname, "../preload/index.js"),
+      sandbox: false,
     },
   });
 
-  mainWindow.loadURL(`file://${__dirname}/index.html`);
+  win.once("ready-to-show", () => {
+    win.show();
+  });
 
-  mainWindow.on("closed", function () {
-    mainWindow = null as any;
+  if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
+    win.loadURL(process.env["ELECTRON_RENDERER_URL"]);
+    win.webContents.toggleDevTools();
+  } else {
+    win.loadFile(path.join(__dirname, "../renderer/index.html"));
+  }
+
+  win.on("closed", function () {
+    win = null as any;
   });
 
   if (fileName) {
     setTimeout(() => {
-      mainWindow.webContents.send("open", fileName);
+      win.webContents.send("open", fileName);
     }, 3000);
   }
 
-  if (process.env.DEBUG) {
-    mainWindow.toggleDevTools();
-  }
-
-  return mainWindow;
+  return win;
 };
 
 app.whenReady().then(() => {
@@ -204,7 +210,7 @@ app.whenReady().then(() => {
 
   ipcMain.handle("save", async () => {
     const result = await dialog.showSaveDialog({
-      defaultPath: app.getPath("userDesktop"),
+      defaultPath: app.getPath("desktop"),
       filters: [
         {
           name: "Documents",
